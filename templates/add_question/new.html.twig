@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EditQuizController!{% endblock %}
+
+{% block body %}
+    <style>
+        li *{
+            list-style-type: none;
+            display:inline-block;
+            margin:0 5px;
+        }
+        li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .add-question {
+            cursor: pointer;
+        }
+        .header{
+            background-image: linear-gradient(to right top, #ffcc00, #2e3136, #5eb5e0);
+        }
+        .header a{
+            float: right;
+            margin: 10px;
+        }
+    </style>
+    <div class="container-fluid header clearfix" >
+        <a class="btn btn-warning" href="{{ '/logout' }}">logout</a>
+        <a class="btn btn-warning" href="{{ '/main' }}">go back</a>
+    </div>
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_row(form.questions) }}
+        <ul class="questions-container">
+                <li>
+                    {% for answer in form.questions %}
+                        {{ form_row(question.answers) }}
+                    {% endfor %}
+                </li>
+        </ul>
+        {#        <input type="button" class="add-question" value="Add question"/>#}
+        <input type="submit" value="Save"/>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
