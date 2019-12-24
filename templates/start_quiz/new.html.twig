@@ -4,45 +4,44 @@
 
 {% block body %}
 
-<div class="example-wrapper">
+<div class="example-wrapper container">
     <table class="table table-bordered">
-        <thead>
         {% set counter = 0 %}
         {% for question in quiz.questions %}
-        <script type="text/javascript">
-            function colorButton1(getTrue, id){
-                {$('#'+id).css("background-color","green")}
-            }
-        </script>
-        <script type="text/javascript">
-            function colorButton2(id){
-                {$('#'+id).css("background-color","red")}
-                }
-        </script>
             <tr>
                 <td colspan="3">{{question.questions}}</td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
+            <tr class="question new">
                 {% for answer in question.answers %}
-                    <th>
-                            {% if answer.getIsTrue() == true %}
-                                <a href="#" type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{ answer.id }}" onclick="colorButton1({{answer.getIsTrue}}, {{ answer.id}})">
-                                    {{ answer.answers}}
-                                    {% set counter = counter + 1 %}
-                                </a>
-                            {% else %}
-                                <a href="#" type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" id="{{ answer.id }}" onclick="colorButton2({{ answer.id}})">
-                                    {{ answer.answers}}
-                                    {% set counter = counter + 1 %}
-                                </a>
-                            {% endif %}
-                    </th>
+                    <td>
+                        <button class="btn btn-primary" onclick="check(this, {{ answer.isTrue }})">
+                            {{ answer.answers}}
+                            {% set counter = counter + 1 %}
+                        </button>
+                    </td>
                 {% endfor %}
             </tr>
-        </tbody>
         {% endfor %}
     </table>
+    <button class="btn btn-primary calculate" onclick="calculate()" disabled="true"> value </button>
 </div>
+    <script type="text/javascript">
+        function check(context,select) {
+            let $container = $('.container');
+            $(context).css("background-color", select ? 'green': 'red');
+            $(context).closest('.question').toggleClass('right', !!select);
+            $(context).closest('.question').find('button').prop('disabled', true);
+            $(context).closest('.question').removeClass('new');
+            if (!$container.find('.question.new').length) {
+                $container.find('.calculate').prop('disabled', false);
+            }
+        }
+        function calculate() {
+            let $container = $('.container');
+            let allLength = $container.find('.question').length;
+            let rightLength = $container.find('.question.right').length;
+            let wrongLength = allLength - rightLength;
+            alert('right:' + rightLength + ', wrong: ' + wrongLength);
+        }
+    </script>
 {% endblock %}

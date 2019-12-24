@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Question;
 use App\Entity\Quiz;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class StartQuizController extends AbstractController
@@ -13,7 +14,7 @@ class StartQuizController extends AbstractController
      * @Route("/start/quiz/{id}", name="start_quiz")
      */
 
-    public function index($id)
+    public function index($id): Response
     {
         $em = $this->getDoctrine()->getManager();
 

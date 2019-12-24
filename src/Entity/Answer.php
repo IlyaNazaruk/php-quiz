@@ -49,7 +49,7 @@ class Answer
         return $this;
     }
 
-    public function getIsTrue(): ?bool
+    public function isTrue(): ?bool
     {
         return $this->is_true;
     }
@@ -69,7 +69,15 @@ class Answer
     public function setAnswers(string $answers): self
     {
         $this->answers = $answers;
+        $a = [];
+        $r = rand(1, 10);
+        $a = array_fill(1,$r, 7);
+        $cal = count($a,[7]);
+        $result = array_count_values($a);
+
+
 
         return $this;
     }
+
 }

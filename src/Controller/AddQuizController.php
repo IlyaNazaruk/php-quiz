@@ -50,4 +50,5 @@ class AddQuizController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }
